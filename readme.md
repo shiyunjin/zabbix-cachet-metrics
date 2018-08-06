@@ -1,10 +1,14 @@
-## 使用场景
-该脚本主要用于更新Cachet的图表。    
-支持从zabbix中取某个item最新的数值与统计elasticsearch近一分钟内的日志数量，然后调用Cachet的API将数值插入图表中。
-支持监控项和WEB监控
+## Zabbix-Cachet-Metrics
+This is python script which provide synchronisation between [Zabbix IT Services](https://www.zabbix.com/documentation/3.0/manual/it_services)
+and [Cachet](https://cachethq.io/)
 
-展示页面请浏览：[SWAP Status](https://status.swap.wang)
+## 简介
+主要用于更新Cachet的图表。    
+支持从Zabbix中取某个监控项的最新数值 或者 统计WEB监控的可用性
+支持统计Elasticsearch近一分钟内的日志数量，然后将数值插入图表中用于统计访问人数。
 
+## Demo 
+[SWAP Status](https://status.swap.wang)
 
 
 ## 配置文件
@@ -20,9 +24,14 @@
  * other:私有值 参考下面
 
 * zbx: 私有值
- * type: host用于WEB可用性图表 item用于监控项图表
- * id: 监控项填写地址中的itemid WEB可用性请填写zabbix 
+  * type: host用于WEB可用性图表 item用于监控项图表
+  * id: 监控项填写地址中的itemid WEB可用性请填写zabbix 
+  * metric_id: Cachet的Metrics id
 * es6：私有值
+  * es6_api_url: elasticsearch地址
+  * es6_index: 索引
+  * metric_id: Cachet的Metrics id
+  
 
 ## Zabbix 配置文件 ID 配置
 * host:
