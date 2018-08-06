@@ -5,7 +5,10 @@ import requests
 from datetime import datetime, timedelta
 
 try:
-    config_content = open(sys.path[0]+'/config.json')
+    if os.getenv('CONFIG_FILE') is not None:
+        config_content = open(os.environ['CONFIG_FILE'])
+    else:
+		config_content = open(os.path.dirname(os.path.realpath(__file__))+'/config.json')
 except Exception as e:
     print(e)
     sys.exit(0)
@@ -64,37 +67,21 @@ def zbx_logout(zbx_url, zbx_login_id, zbx_login_token):
     return req_content
 
 
-def get_zbx_item_value(zbx_url, zbx_token, zbx_item_type, zbx_item_id):
-    if zbx_item_type == 'host': 
-		payload = {
-			"jsonrpc": "2.0",
-			"method": "history.get",
-			"params": {
-				"output": "extend",
-				"history": 0,
-				"hostids": zbx_item_id,
-				"sortfield": "clock",
-				"sortorder": "DESC",
-				"limit": 1
-			},
-			"auth": zbx_token,
-			"id": 1
-		}
-	else:
-		payload = {
-			"jsonrpc": "2.0",
-			"method": "history.get",
-			"params": {
-				"output": "extend",
-				"history": 0,
-				"itemids": zbx_item_id,
-				"sortfield": "clock",
-				"sortorder": "DESC",
-				"limit": 1
-			},
-			"auth": zbx_token,
-			"id": 1
-		}
+def get_zbx_item_value(zbx_url, zbx_token, zbx_item_id):
+	payload = {
+		"jsonrpc": "2.0",
+		"method": "history.get",
+		"params": {
+			"output": "extend",
+			"history": 0,
+			"itemids": zbx_item_id,
+			"sortfield": "clock",
+			"sortorder": "DESC",
+			"limit": 1
+		},
+		"auth": zbx_token,
+		"id": 1
+	}
     headers = {'content-type': 'application/json'}
     req_run = requests.post(zbx_url, data=json.dumps(payload), headers=headers)
     req_content = json.loads(req_run.text)
@@ -160,13 +147,12 @@ def run_zbx(config_json, time_now):
     zbx_api_url = config_json['zbx_api_url'] + '/api_jsonrpc.php'
     zbx_username = config_json['zbx_username']
     zbx_passwd = config_json['zbx_passwd']
-	zbx_type = config_json['zbx_type']
     zbx_item_id = config_json['zbx_id']
     metric_id = config_json['metric_id']
 
     login_content = zbx_login(zbx_api_url, zbx_username, zbx_passwd)
     zbx_token = login_content['result']
-    item_value = get_zbx_item_value(zbx_api_url, zbx_token, zbx_type, zbx_item_id)
+    item_value = get_zbx_item_value(zbx_api_url, zbx_token, zbx_item_id)
     zbx_logout(zbx_api_url, login_content['id'], zbx_token)
     cachethq_metrics_add_point(cachethq_api_key, metric_id, item_value, time_now[0:10])
 
