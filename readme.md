@@ -3,9 +3,9 @@ This is python script which provide synchronisation between [Zabbix IT Services]
 and [Cachet](https://cachethq.io/)
 
 ## 简介
-主要用于更新Cachet的图表。    
-支持从Zabbix中取某个监控项的最新数值 或者 统计WEB监控的可用性
-支持统计Elasticsearch近一分钟内的日志数量，然后将数值插入图表中用于统计访问人数。
+主要用于更新Cachet的图表。
+1. 支持从Zabbix中取某个监控项的最新数值 或者 统计WEB监控的可用性。
+2. 支持统计Elasticsearch近一分钟内的日志数量，然后将数值插入图表中用于统计访问人数。
 
 ## Demo 
 [SWAP Status](https://status.swap.wang)
@@ -35,17 +35,18 @@ and [Cachet](https://cachethq.io/)
 
 ## Zabbix 配置文件 ID 配置
 * host:
-    * 提取方式： 检测中->最新数据(/latest.php?ddreset=1)->"Failed step of scenario "******"."->历史记录->URL(/history.php?action=showvalues&itemids[]=28264) -> itemids[]=28264 -> 28264
+    * 提取方式： 检测中->最新数据`/latest.php?ddreset=1`->`Failed step of scenario "******".`->历史记录->URL`/history.php?action=showvalues&itemids[]=28264` -> `itemids[]=28264` -> `28264`
     * Cachet图表设置: 每个度量点之间应当间隔多少分钟？->0  小数点位数->2  图表计算方法->Average  默认值->0
 * item:
-    * 提取方式： 配置->主机(/hosts.php?ddreset=1)->监控项-> Anyone -> URL(/items.php?form=update&hostid=10084&itemid=23316) -> itemid=23316 -> 23316
+    * 提取方式： 配置->主机`/hosts.php?ddreset=1`->监控项-> Anyone -> URL`/items.php?form=update&hostid=10084&itemid=23316` -> `itemid=23316` -> `23316`
     * Cachet图表设置: 不一定自己研究
 
 按上方提取方式填写。
 
 ## Docker部署 (推荐)
+0. 如果你是中国服务器你可能需要先设置一下Docker加速器,否则下载会非常慢(阿里云和Daocloud都有免费提供) 
+
 1. 创建 `/etc/zabbix-cachet-metrics.json` 请参考 `config-example.json`.
-1.5. 如果你是中国服务器你可能需要先设置一下Docker加速器,否则下载会非常慢(阿里云和Daocloud都有免费提供) 
 2. 运行Docker容器
     ```
     docker run --name zabbix-cachet-metrics -v /etc/zabbix-cachet-metrics.json:/config.json shiyunjin/zabbix-cachet-metrics
