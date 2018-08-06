@@ -63,10 +63,7 @@ and [Cachet](https://cachethq.io/)
 该脚本直接执行即可：    
     
     /usr/bin/python3 ./zabbix-cachet-metrics.py    
-    
-建议将其加入crontab，实现自动更新：    
-    
-    */1 * * * * root /usr/bin/python3 /opt/cachet/zabbix-cachet-metrics.py
+
 
 ## 其他
 脚本中elasticsearch的query payload仅在ES6中测试过，仅能统计指定索引在最近一分钟内的请求数。    
