@@ -1,0 +1,28 @@
+{
+	"update_interval": 3,
+	"service": {
+		"cachet": {
+			"url": "https://status.demo.com",
+			"api_key": ""
+		},
+		"zbx": {
+			"url": "http://zabbix.t.com",
+			"username": "",
+			"password": ""
+		}
+	},
+	"config": [
+		{
+		  "services": "zbx",
+		  "type": "host",
+		  "id": "1",
+		  "metric_id": "2"
+		},
+		{
+		  "services": "es6",
+		  "es6_api_url": "http://es6-node1.t.com:9200/",
+		  "es6_index": "index_1",
+		  "metric_id": "1"
+		}
+	]
+}
