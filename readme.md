@@ -1,4 +1,4 @@
-##鸣谢
+## 鸣谢
 原脚本地址 [NGX LAB](https://gitlab.ngx.hk/tc/some-script/tree/master/cachethq) 感谢提供脚本和基本思路,在此基础上添加了更多监控项图表和docker部署化支持
 
 ## 使用场景
