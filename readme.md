@@ -14,13 +14,17 @@ and [Cachet](https://cachethq.io/)
 ## 配置文件
 * update_interval: 更新时间 秒
 * service：服务信息
- * cachet: 请填写Cachet的API地址与API Token
-  * url: Cachet的API地址
-  * api_key: Cachet的API Token
+  * cachet: 请填写Cachet的API地址与API Token
+    * url: Cachet的API地址
+    * api_key: Cachet的API Token
+  * zbx: 填写Zabbix地址和帐号密码
+    * url: Zabbix地址
+    * username: 用户名
+    * password: 密码
 * config：以列表的形式记录数据源的信息，脚本会自动遍历该列表，根据配置信息逐一更新Cachet的图表
- * services：
-   * zbx: zabbix
-   * es6: elasticsearch
+  * services：
+    * zbx: zabbix
+    * es6: elasticsearch
  * other:私有值 参考下面
 
 * zbx: 私有值
